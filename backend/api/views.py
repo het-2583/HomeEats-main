@@ -19,6 +19,8 @@ import random
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
@@ -277,7 +279,7 @@ class DeliveryViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['post'])
     def accept(self, request, pk=None):
         delivery = self.get_object()
-        user = self.request.user
+        user = request.user
 
         if user.user_type != 'delivery':
             return Response({'error': 'Only delivery boys can accept deliveries.'}, status=status.HTTP_403_FORBIDDEN)

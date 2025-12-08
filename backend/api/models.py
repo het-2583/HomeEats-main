@@ -62,4 +62,4 @@ class Delivery(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f"Delivery #{self.id} - Order #{self.order.id}" 
+        return f"Delivery #{self.id} - Order #{self.order.id}"

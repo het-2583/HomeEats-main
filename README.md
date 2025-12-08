@@ -14,7 +14,7 @@ A full-stack web application connecting customers with homemade food providers a
 
 - **Backend**: Django + Django REST Framework
 - **Frontend**: React
-- **Database**: SQLite
+- **Database**: PostgreSQL (Home_db)
 - **Authentication**: JWT
 
 ## Project Structure
@@ -79,7 +79,14 @@ npm start
 DEBUG=True
 SECRET_KEY=your-secret-key
 ALLOWED_HOSTS=localhost,127.0.0.1
+DB_NAME=Home_db
+DB_USER=your-db-user
+DB_PASSWORD=your-db-password
+DB_HOST=localhost
+DB_PORT=5432
 ```
+
+**Note**: The database name defaults to `Home_db` if `DB_NAME` is not set in the environment variables.
 
 ### Frontend (.env)
 ```

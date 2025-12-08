@@ -152,10 +152,6 @@ const CustomerDashboard = () => {
     }
   };
 
-  const handleTabChange = (event, newValue) => {
-    setTabValue(newValue);
-  };
-
   const fetchTiffins = async (pincode = '', category = '') => {
     setLoading(true);
     setError(null);
@@ -316,6 +312,10 @@ const CustomerDashboard = () => {
 
   const handleOrderHistoryPageChange = (event, value) => {
     setOrderHistoryPage(value);
+  };
+
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
   };
 
   console.log('OwnerDashboard notifications context:', notifications);
@@ -549,4 +549,4 @@ const CustomerDashboard = () => {
   );
 };
 
-export default CustomerDashboard; 
+export default CustomerDashboard;

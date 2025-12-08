@@ -1,7 +1,9 @@
 import re
+from django.db import IntegrityError
 
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
+from rest_framework.exceptions import ValidationError
 from users.models import User, TiffinOwner, DeliveryBoy, Wallet, WalletTransaction, BankAccount
 from .models import Tiffin, Order, Delivery
 
@@ -100,17 +102,18 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class TiffinOwnerSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
     class Meta:
         model = TiffinOwner
-        fields = ('id', 'user', 'business_name', 'business_address', 'business_pincode', 'is_verified')
+        fields = '__all__'
+
+    def validate_fssai_number(self, value):
+        if TiffinOwner.objects.filter(fssai_number=value).exists():
+            raise ValidationError('A TiffinOwner with this FSSAI number already exists.')
+        return value
 
     def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        user = User.objects.create_user(**user_data)
-        tiffin_owner = TiffinOwner.objects.create(user=user, **validated_data)
-        return tiffin_owner
+        # Restore original registration logic
+        return TiffinOwner.objects.create(**validated_data)
 
 class DeliveryBoySerializer(serializers.ModelSerializer):
     user = UserSerializer()

@@ -25,6 +25,7 @@ import { logout } from '../redux/slices/authSlice';
 import Badge from '@mui/material/Badge';
 import { useNotifications } from '../contexts/NotificationContext';
 import logo from '../assets/logo.png';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const theme = useTheme();

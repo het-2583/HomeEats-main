@@ -49,8 +49,6 @@ const OwnerDashboard = () => {
   const [totalPages, setTotalPages] = useState(1);
   const pageSize = 10;
   const { addNotification, notifications } = useNotifications();
-  const prevOrdersRef = React.useRef([]);
-  const user = useSelector((state) => state.auth.user);
 
   // Define these at the top so they're always in scope
   const ownerTiffinIds = tiffins.map(t => t.id);
@@ -58,28 +56,6 @@ const OwnerDashboard = () => {
     order => ownerTiffinIds.includes(order.tiffin) && ['pending', 'confirmed', 'preparing'].includes(order.status)
   );
   const totalActivePages = Math.max(1, Math.ceil(activeOrdersAll.length / pageSize));
-
-  useEffect(() => {
-    fetchData(page);
-    const interval = setInterval(() => fetchData(page), 5000);
-    return () => clearInterval(interval);
-  }, [page]);
-
-  useEffect(() => {
-    if (page > totalActivePages) setPage(1);
-  }, [totalActivePages]);
-
-  useEffect(() => {
-    // For every active order, if there is no notification for it, add one
-    activeOrdersAll.forEach(order => {
-      const notifMsg = `You received a new order for your tiffin: ${order.tiffin_name} (Order #${order.id})`;
-      const alreadyNotified = notifications.some(n => n.message === notifMsg);
-      if (!alreadyNotified) {
-        addNotification(notifMsg);
-        console.log('Adding notification for order:', order.id, order.tiffin_name);
-      }
-    });
-  }, [activeOrdersAll, notifications, addNotification]);
 
   const fetchData = async (pageNum = page) => {
     try {
@@ -132,6 +108,28 @@ const OwnerDashboard = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchData(page);
+    const interval = setInterval(() => fetchData(page), 5000);
+    return () => clearInterval(interval);
+  }, [page]);
+
+  useEffect(() => {
+    if (page > totalActivePages) setPage(1);
+  }, [totalActivePages]);
+
+  useEffect(() => {
+    // For every active order, if there is no notification for it, add one
+    activeOrdersAll.forEach(order => {
+      const notifMsg = `You received a new order for your tiffin: ${order.tiffin_name} (Order #${order.id})`;
+      const alreadyNotified = notifications.some(n => n.message === notifMsg);
+      if (!alreadyNotified) {
+        addNotification(notifMsg);
+        console.log('Adding notification for order:', order.id, order.tiffin_name);
+      }
+    });
+  }, [activeOrdersAll, notifications, addNotification]);
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -591,4 +589,4 @@ const OwnerDashboard = () => {
   );
 };
 
-export default OwnerDashboard; 
+export default OwnerDashboard;
