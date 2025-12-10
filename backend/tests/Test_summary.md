@@ -98,16 +98,13 @@
 
 **Running Tests**
 
-```bash
-# Run all tests
-python manage.py test
+cd backend
 
-# Run with verbose output
-python manage.py test --verbosity=2
+# Run all tests with SQLite test settings
+python manage.py test tests --settings=tests.settings_test
 
-# Run specific test class
-python manage.py test tests.unit.test_wallet_helpers.WalletHelperTest
+# Run specific groups
+python manage.py test tests.unit tests.integration tests.spec --settings=tests.settings_test
 
-# Run specific test method
-python manage.py test tests.unit.test_wallet_helpers.WalletHelperTest.test_adjust_wallet_balance_adds_money
-```
+# Run a single file
+python manage.py test tests.integration.test_wallet_api --settings=tests.settings_test
