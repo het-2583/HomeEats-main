@@ -78,6 +78,7 @@ class PasswordValidationTest(TestCase):
             'confirm_password': 'ValidPass123!',
             'user_type': 'customer',
             'phone_number': '1234567890',
+            'address': '123 Test Street',
             'pincode': '123456'
         })
         

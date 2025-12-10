@@ -20,14 +20,19 @@ class WalletAPITest(TestCase):
         self.user = User.objects.create_user(
             username='testuser',
             email='test@example.com',
-            password='testpass123'
+            password='testpass123',
+            user_type='customer',
+            phone_number='1234567890',
+            address='123 Test Street',
+            pincode='123456'
         )
-        # Get JWT token
+        # Get JWT token using username (SimpleJWT uses USERNAME_FIELD=“username” here)
         response = self.client.post('/api/token/', {
-            'email': 'test@example.com',
+            'username': 'testuser',
             'password': 'testpass123'
         })
-        self.token = response.data['access']
+        self.token = response.data.get('access')
+        assert self.token, "Token generation failed in test setup"
         self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.token}')
     
     def test_deposit_money_to_wallet(self):

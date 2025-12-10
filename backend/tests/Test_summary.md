@@ -2,16 +2,16 @@
 
 - **Location**: `backend/tests/` — contains unit, integration and specification tests for Django REST API services.
 
-- **Run all tests**: `python manage.py test` (runs Django test suite)
+- **Run all tests**: `python manage.py test tests --settings=tests.settings_test` (uses in-memory SQLite)
 
 **Quick Run**
 
-- Run only unit tests: `python manage.py test tests.unit` or `python manage.py test tests/unit`
-- Run only integration tests: `python manage.py test tests.integration` or `python manage.py test tests/integration`
-- Run only specification tests: `python manage.py test tests.spec` or `python manage.py test tests/spec`
-- Run wallet helper tests: `python manage.py test tests.unit.test_wallet_helpers`
-- Run wallet API tests: `python manage.py test tests.integration.test_wallet_api`
-- Run password validation tests: `python manage.py test tests.spec.test_password_validation`
+- Run only unit tests: `python manage.py test tests.unit --settings=tests.settings_test` or `python manage.py test tests/unit --settings=tests.settings_test`
+- Run only integration tests: `python manage.py test tests.integration --settings=tests.settings_test` or `python manage.py test tests/integration --settings=tests.settings_test`
+- Run only specification tests: `python manage.py test tests.spec --settings=tests.settings_test` or `python manage.py test tests/spec --settings=tests.settings_test`
+- Run wallet helper tests: `python manage.py test tests.unit.test_wallet_helpers --settings=tests.settings_test`
+- Run wallet API tests: `python manage.py test tests.integration.test_wallet_api --settings=tests.settings_test`
+- Run password validation tests: `python manage.py test tests.spec.test_password_validation --settings=tests.settings_test`
 
 **What this test suite covers**
 
@@ -24,7 +24,7 @@
 **Files & Purpose**
 
 - `backend/tests/settings_test.py`
-  - Test-specific Django settings (uses SQLite in-memory database for faster test execution).
+  - Test-specific Django settings (uses SQLite in-memory database for faster test execution). Use `--settings=tests.settings_test` when running tests.
 
 **Unit tests (mocked dependencies)**
 
